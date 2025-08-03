@@ -18,6 +18,8 @@
             --light-text: #f8f9fa;
             --dark-bg: #1a0033;
             --section-bg: #f9f9f9;
+            --dark-mode-bg: #121212;
+            --dark-mode-text: #e0e0e0;
         }
         
         * {
@@ -30,6 +32,39 @@
         body {
             color: var(--text-color);
             line-height: 1.6;
+            transition: all 0.5s ease;
+        }
+
+        body.dark-mode {
+            background-color: var(--dark-mode-bg);
+            color: var(--dark-mode-text);
+        }
+
+        .dark-mode .navbar {
+            background-color: #1e1e1e;
+        }
+
+        .dark-mode .section {
+            background-color: #1e1e1e !important;
+            color: var(--dark-mode-text);
+        }
+
+        .dark-mode .skill-card,
+        .dark-mode .portfolio-item,
+        .dark-mode .news-item {
+            background-color: #2d2d2d !important;
+            color: var(--dark-mode-text);
+        }
+
+        .dark-mode .section-title h2 {
+            color: var(--accent-color);
+        }
+
+        .dark-mode .contact-form input,
+        .dark-mode .contact-form textarea {
+            background-color: #2d2d2d;
+            color: white;
+            border-color: #444;
         }
         
         /* الهيدر */
@@ -41,6 +76,17 @@
             width: 100%;
             top: 0;
             z-index: 1000;
+            transition: all 0.3s ease;
+        }
+        
+        .navbar.scrolled {
+            background-color: rgba(255, 255, 255, 0.95);
+            padding: 10px 0;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+
+        .dark-mode .navbar.scrolled {
+            background-color: rgba(30, 30, 30, 0.95);
         }
         
         .container {
@@ -60,11 +106,21 @@
             font-weight: 700;
             color: var(--primary-color);
             text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .dark-mode .logo {
+            color: var(--accent-color);
+        }
+        
+        .logo:hover {
+            color: var(--accent-color);
         }
         
         .nav-links {
             display: flex;
             list-style: none;
+            align-items: center;
         }
         
         .nav-links li {
@@ -76,10 +132,51 @@
             text-decoration: none;
             font-weight: 500;
             transition: color 0.3s;
+            position: relative;
+            padding: 5px 0;
+        }
+
+        .dark-mode .nav-links a {
+            color: var(--dark-mode-text);
+        }
+        
+        .nav-links a:after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            right: 0;
+            background-color: var(--accent-color);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-links a:hover:after {
+            width: 100%;
+            right: auto;
+            left: 0;
         }
         
         .nav-links a:hover {
             color: var(--primary-color);
+        }
+
+        .dark-mode .nav-links a:hover {
+            color: var(--accent-color);
+        }
+
+        /* زر الوضع الليلي */
+        .theme-toggle {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-color);
+            transition: all 0.3s;
+        }
+
+        .dark-mode .theme-toggle {
+            color: var(--accent-color);
         }
         
         /* قسم البطل */
@@ -88,6 +185,8 @@
             color: white;
             padding: 180px 0 100px;
             text-align: center;
+            position: relative;
+            overflow: hidden;
         }
         
         .hero h1 {
@@ -97,6 +196,7 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             text-shadow: 0 0 20px rgba(179, 0, 255, 0.3);
+            animation: fadeInUp 1s ease;
         }
         
         .hero p {
@@ -104,6 +204,7 @@
             max-width: 700px;
             margin: 0 auto 30px;
             color: #ddd;
+            animation: fadeInUp 1s ease 0.2s both;
         }
         
         .btn {
@@ -118,16 +219,26 @@
             border: none;
             cursor: pointer;
             box-shadow: 0 5px 15px rgba(179, 0, 255, 0.4);
+            animation: fadeInUp 1s ease 0.4s both;
         }
         
         .btn:hover {
             transform: translateY(-3px);
             box-shadow: 0 8px 20px rgba(179, 0, 255, 0.6);
+            background-color: var(--secondary-color);
         }
         
         /* الأقسام */
         .section {
             padding: 80px 0;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+        
+        .section.visible {
+            opacity: 1;
+            transform: translateY(0);
         }
         
         .section-title {
@@ -142,6 +253,10 @@
             display: inline-block;
             position: relative;
         }
+
+        .dark-mode .section-title h2 {
+            color: var(--accent-color);
+        }
         
         .section-title h2:after {
             content: "";
@@ -151,11 +266,20 @@
             width: 50px;
             height: 3px;
             background-color: var(--accent-color);
+            transition: width 0.5s ease;
+        }
+        
+        .section-title h2:hover:after {
+            width: 100%;
         }
         
         /* قسم عني */
         .about {
             background-color: var(--section-bg);
+        }
+
+        .dark-mode .about {
+            background-color: var(--dark-mode-bg) !important;
         }
         
         .about-content {
@@ -173,23 +297,42 @@
             margin-bottom: 20px;
             color: var(--primary-color);
         }
+
+        .dark-mode .about-text h3 {
+            color: var(--accent-color);
+        }
         
         .about-image {
             flex: 1;
             border-radius: 10px;
             overflow: hidden;
             box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transform: perspective(1000px) rotateY(-10deg);
+            transition: transform 0.5s ease;
+        }
+        
+        .about-image:hover {
+            transform: perspective(1000px) rotateY(0deg);
         }
         
         .about-image img {
             width: 100%;
             height: auto;
             display: block;
+            transition: transform 0.5s ease;
+        }
+        
+        .about-image:hover img {
+            transform: scale(1.05);
         }
         
         /* قسم المهارات */
         .skills {
             background-color: white;
+        }
+
+        .dark-mode .skills {
+            background-color: var(--dark-mode-bg) !important;
         }
         
         .skills-grid {
@@ -203,28 +346,251 @@
             border-radius: 10px;
             padding: 30px;
             box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-            transition: transform 0.3s;
+            transition: all 0.3s;
             text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .dark-mode .skill-card {
+            background-color: #2d2d2d !important;
+        }
+        
+        .skill-card:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(to right, var(--accent-color), var(--secondary-color));
+            transform: scaleX(0);
+            transform-origin: right;
+            transition: transform 0.3s ease;
         }
         
         .skill-card:hover {
             transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+        }
+        
+        .skill-card:hover:before {
+            transform: scaleX(1);
+            transform-origin: left;
         }
         
         .skill-icon {
             font-size: 2.5rem;
             color: var(--accent-color);
             margin-bottom: 20px;
+            transition: all 0.3s;
+        }
+        
+        .skill-card:hover .skill-icon {
+            transform: rotateY(180deg);
+            color: var(--secondary-color);
         }
         
         .skill-card h3 {
             margin-bottom: 15px;
             color: var(--primary-color);
+            transition: all 0.3s;
+        }
+
+        .dark-mode .skill-card h3 {
+            color: var(--accent-color);
         }
         
+        .skill-card:hover h3 {
+            color: var(--accent-color);
+        }
+
+        /* شريط التقدم للمهارات */
+        .skills-progress {
+            margin-top: 50px;
+        }
+
+        .progress-container {
+            margin-bottom: 25px;
+        }
+
+        .progress-title {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+        }
+
+        .progress-bar {
+            height: 10px;
+            background: #eee;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .dark-mode .progress-bar {
+            background: #444;
+        }
+
+        .progress-fill {
+            height: 100%;
+            border-radius: 5px;
+            background: linear-gradient(to right, var(--accent-color), var(--secondary-color));
+            width: 0;
+            transition: width 1.5s ease;
+        }
+
+        /* قسم الأعمال */
+        .portfolio {
+            background-color: var(--section-bg);
+        }
+
+        .dark-mode .portfolio {
+            background-color: var(--dark-mode-bg) !important;
+        }
+
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .portfolio-item {
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .dark-mode .portfolio-item {
+            background-color: #2d2d2d !important;
+        }
+
+        .portfolio-item img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+
+        .portfolio-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(74, 6, 56, 0.8);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.3s;
+            padding: 20px;
+            text-align: center;
+            color: white;
+        }
+
+        .portfolio-item:hover .portfolio-overlay {
+            opacity: 1;
+        }
+
+        .portfolio-item:hover img {
+            transform: scale(1.1);
+        }
+
+        .portfolio-overlay h3 {
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+        }
+
+        /* قسم الأخبار */
+        .news {
+            background-color: white;
+        }
+
+        .dark-mode .news {
+            background-color: var(--dark-mode-bg) !important;
+        }
+
+        .news-container {
+            display: flex;
+            overflow-x: auto;
+            gap: 20px;
+            padding: 20px 0;
+            scroll-snap-type: x mandatory;
+        }
+
+        .news-item {
+            min-width: 300px;
+            border-radius: 10px;
+            padding: 20px;
+            background-color: white;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            scroll-snap-align: start;
+        }
+
+        .dark-mode .news-item {
+            background-color: #2d2d2d !important;
+        }
+
+        .news-item h3 {
+            margin-bottom: 10px;
+            color: var(--primary-color);
+        }
+
+        .dark-mode .news-item h3 {
+            color: var(--accent-color);
+        }
+
+        .news-date {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .dark-mode .news-date {
+            color: #aaa;
+        }
+
+        /* ساعة إسلامية */
+        .islamic-clock {
+            background: linear-gradient(135deg, var(--primary-color), var(--dark-bg));
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            margin: 30px auto;
+            max-width: 500px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+
+        .prayer-times {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .prayer-time {
+            background: rgba(255,255,255,0.1);
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        .prayer-time.active {
+            background: var(--accent-color);
+            font-weight: bold;
+        }
+
         /* قسم التواصل */
         .contact {
             background-color: var(--section-bg);
+        }
+
+        .dark-mode .contact {
+            background-color: var(--dark-mode-bg) !important;
         }
         
         .contact-container {
@@ -241,9 +607,16 @@
             margin-bottom: 20px;
             color: var(--primary-color);
         }
+
+        .dark-mode .contact-info h3 {
+            color: var(--accent-color);
+        }
         
         .contact-info p {
             margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
         
         .social-links {
@@ -266,7 +639,7 @@
         
         .social-link:hover {
             background-color: var(--accent-color);
-            transform: translateY(-3px);
+            transform: translateY(-3px) scale(1.1);
         }
         
         .contact-form input,
@@ -277,11 +650,113 @@
             border: 1px solid #ddd;
             border-radius: 5px;
             font-family: 'Tajawal', sans-serif;
+            transition: all 0.3s;
+        }
+
+        .dark-mode .contact-form input,
+        .dark-mode .contact-form textarea {
+            background-color: #2d2d2d;
+            color: white;
+            border-color: #444;
+        }
+        
+        .contact-form input:focus,
+        .contact-form textarea:focus {
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 3px rgba(179, 0, 255, 0.1);
+            outline: none;
         }
         
         .contact-form textarea {
             height: 150px;
             resize: vertical;
+        }
+
+        /* لعبة أسئلة دينية */
+        .quiz-game {
+            background-color: var(--section-bg);
+            padding: 40px;
+            border-radius: 10px;
+            margin: 40px auto;
+            max-width: 800px;
+            text-align: center;
+        }
+
+        .dark-mode .quiz-game {
+            background-color: #2d2d2d !important;
+        }
+
+        .quiz-question {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+        }
+
+        .quiz-options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .quiz-option {
+            padding: 15px;
+            background-color: white;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 2px solid transparent;
+        }
+
+        .dark-mode .quiz-option {
+            background-color: #3d3d3d;
+        }
+
+        .quiz-option:hover {
+            border-color: var(--accent-color);
+        }
+
+        .quiz-option.correct {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        .quiz-option.wrong {
+            background-color: #F44336;
+            color: white;
+        }
+
+        .quiz-score {
+            font-size: 1.2rem;
+            margin-top: 20px;
+        }
+
+        .quiz-next {
+            margin-top: 20px;
+        }
+
+        /* واتساب عائم */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            width: 60px;
+            height: 60px;
+            background-color: #25D366;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            z-index: 100;
+            transition: all 0.3s;
+            animation: pulse 2s infinite;
+        }
+
+        .whatsapp-float:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.4);
         }
         
         /* الفوتر */
@@ -290,6 +765,7 @@
             color: white;
             padding: 30px 0;
             text-align: center;
+            position: relative;
         }
         
         .footer p {
@@ -299,6 +775,12 @@
         .footer a {
             color: var(--accent-color);
             text-decoration: none;
+            transition: all 0.3s;
+        }
+        
+        .footer a:hover {
+            text-decoration: underline;
+            color: white;
         }
         
         /* التكيف مع الشاشات الصغيرة */
@@ -314,9 +796,25 @@
             .about-content {
                 flex-direction: column;
             }
+
+            .portfolio-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .quiz-options {
+                grid-template-columns: 1fr;
+            }
             
             .section {
                 padding: 60px 0;
+            }
+
+            .whatsapp-float {
+                width: 50px;
+                height: 50px;
+                font-size: 1.5rem;
+                bottom: 20px;
+                left: 20px;
             }
         }
         
@@ -334,6 +832,66 @@
             right: -10px;
             color: var(--accent-color);
             font-size: 1.5rem;
+            animation: pulse 2s infinite;
+        }
+        
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.1);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+        
+        /* Floating elements */
+        .floating {
+            animation: floating 3s ease-in-out infinite;
+        }
+        
+        @keyframes floating {
+            0% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-15px);
+            }
+            100% {
+                transform: translateY(0px);
+            }
+        }
+        
+        /* Particles background */
+        .particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            overflow: hidden;
+        }
+        
+        .particle {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 50%;
+            pointer-events: none;
         }
     </style>
 </head>
@@ -348,7 +906,13 @@
                     <li><a href="#home">الرئيسية</a></li>
                     <li><a href="#about">عني</a></li>
                     <li><a href="#skills">مهاراتي</a></li>
+                    <li><a href="#portfolio">أعمالي</a></li>
                     <li><a href="#contact">تواصل معي</a></li>
+                    <li>
+                        <button class="theme-toggle" id="themeToggle">
+                            <i class="fas fa-moon"></i>
+                        </button>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -356,6 +920,7 @@
 
     <!-- قسم البطل -->
     <section id="home" class="hero">
+        <div class="particles" id="particles-js"></div>
         <div class="container">
             <h1>يوسف خالد</h1>
             <p>مطور ويب محترف | مصمم بوتات واتساب | طالب ثانوية</p>
@@ -382,9 +947,10 @@
                         "وما توفيقي إلا بالله عليه توكلت وإليه أنيب" (هود:88)
                     </p>
                 </div>
-                <div class="about-image">
-    <<img src="https://yousef-khalid-dev.github.io/Site/b2e92e2de85019849002777a405e7a42.jpg" alt="White Hat" style="width:100%; max-width:400px;">
+                <div class="about-image floating">
+                    <img src="https://yousef-khalid-dev.github.io/Site/b2e92e2de85019849002777a405e7a42.jpg" alt="يوسف خالد" style="width:100%; max-width:400px;">
                 </div>
+            </div>
         </div>
     </section>
 
@@ -416,6 +982,151 @@
                     <h3>تصميم متجاوب</h3>
                     <p>إنشاء مواقع تعمل بكفاءة على جميع أحجام الشاشات والأجهزة</p>
                 </div>
+            </div>
+
+            <!-- شريط تقدم المهارات -->
+            <div class="skills-progress">
+                <h3 style="text-align: center; margin: 40px 0 30px; color: var(--primary-color);" class="dark-mode-text">مستوى إتقاني للتقنيات</h3>
+                
+                <div class="progress-container">
+                    <div class="progress-title">
+                        <span>HTML</span>
+                        <span class="progress-percent" id="html-percent">0%</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" data-width="95" id="html-progress"></div>
+                    </div>
+                </div>
+                
+                <div class="progress-container">
+                    <div class="progress-title">
+                        <span>CSS</span>
+                        <span class="progress-percent" id="css-percent">0%</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" data-width="90" id="css-progress"></div>
+                    </div>
+                </div>
+                
+                <div class="progress-container">
+                    <div class="progress-title">
+                        <span>JavaScript</span>
+                        <span class="progress-percent" id="js-percent">0%</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" data-width="85" id="js-progress"></div>
+                    </div>
+                </div>
+                
+                <div class="progress-container">
+                    <div class="progress-title">
+                        <span>بوتات واتساب</span>
+                        <span class="progress-percent" id="whatsapp-percent">0%</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" data-width="92" id="whatsapp-progress"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- قسم الأعمال -->
+    <section id="portfolio" class="section portfolio">
+        <div class="container">
+            <div class="section-title islamic-decoration">
+                <h2>أعمالي</h2>
+            </div>
+            <div class="portfolio-grid">
+                <div class="portfolio-item">
+                    <img src="https://via.placeholder.com/600x400?text=مشروع+بوت+واتساب" alt="مشروع بوت واتساب">
+                    <div class="portfolio-overlay">
+                        <h3>بوت واتساب متقدم</h3>
+                        <p>بوت لإدارة المجموعات وحمايتها من السبام</p>
+                        <a href="#" class="btn">عرض التفاصيل</a>
+                    </div>
+                </div>
+                
+                <div class="portfolio-item">
+                    <img src="https://via.placeholder.com/600x400?text=موقع+إلكتروني" alt="موقع إلكتروني">
+                    <div class="portfolio-overlay">
+                        <h3>موقع تجاري</h3>
+                        <p>موقع لشركة محلية مع نظام حجز مواعيد</p>
+                        <a href="#" class="btn">عرض التفاصيل</a>
+                    </div>
+                </div>
+                
+                <div class="portfolio-item">
+                    <img src="https://via.placeholder.com/600x400?text=تطبيق+ويب" alt="تطبيق ويب">
+                    <div class="portfolio-overlay">
+                        <h3>منصة تعليمية</h3>
+                        <p>منصة لتعليم البرمجة للمبتدئين</p>
+                        <a href="#" class="btn">عرض التفاصيل</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- قسم الأخبار والتحديثات -->
+    <section id="news" class="section news">
+        <div class="container">
+            <div class="section-title islamic-decoration">
+                <h2>آخر التحديثات</h2>
+            </div>
+            <div class="news-container">
+                <div class="news-item">
+                    <span class="news-date">15 يونيو 2023</span>
+                    <h3>إطلاق النسخة الجديدة من بوت الواتساب</h3>
+                    <p>تم إضافة ميزات جديدة للبوت بما في ذلك الحماية المتقدمة وإدارة المجموعات</p>
+                </div>
+                
+                <div class="news-item">
+                    <span class="news-date">1 يوليو 2023</span>
+                    <h3>ورشة عمل تطوير الويب</h3>
+                    <p>سأقيم ورشة عمل مجانية لتعليم أساسيات تطوير الويب للمبتدئين</p>
+                </div>
+                
+                <div class="news-item">
+                    <span class="news-date">10 أغسطس 2023</span>
+                    <h3>مشروع جديد قيد التطوير</h3>
+                    <p>يعمل حالياً على منصة إلكترونية لتعليم القرآن الكريم</p>
+                </div>
+                
+                <div class="news-item">
+                    <span class="news-date">25 أغسطس 2023</span>
+                    <h3>تحديثات الموقع</h3>
+                    <p>تم إضافة قسم جديد للأسئلة الشائعة وتحسين أداء الموقع</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ساعة إسلامية -->
+    <section class="section">
+        <div class="container">
+            <div class="islamic-clock" id="islamicClock">
+                <h3 style="margin-bottom: 15px;">التوقيت الإسلامي</h3>
+                <div style="font-size: 2rem; font-weight: bold;" id="prayerTimeNow"></div>
+                <div style="margin: 10px 0; font-size: 1.2rem;">
+                    <span id="hijriDate"></span> | <span id="gregorianDate"></span>
+                </div>
+                <div class="prayer-times" id="prayerTimes">
+                    <!-- يتم تعبئته بالجافاسكريبت -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- لعبة أسئلة دينية -->
+    <section class="section">
+        <div class="container">
+            <div class="quiz-game" id="quizGame">
+                <h3 style="margin-bottom: 20px;">اختبر معلوماتك الدينية</h3>
+                <div class="quiz-question" id="quizQuestion"></div>
+                <div class="quiz-options" id="quizOptions"></div>
+                <div class="quiz-score" id="quizScore">النقاط: 0</div>
+                <button class="btn quiz-next" id="quizNext" style="display: none;">السؤال التالي</button>
             </div>
         </div>
     </section>
@@ -450,12 +1161,13 @@
                     </div>
                 </div>
                 <div class="contact-form">
-                    <form>
-                        <input type="text" placeholder="اسمك الكريم" required>
-                        <input type="email" placeholder="بريدك الإلكتروني" required>
-                        <input type="text" placeholder="الموضوع">
-                        <textarea placeholder="رسالتك"></textarea>
+                    <form id="contactForm">
+                        <input type="text" placeholder="اسمك الكريم" required id="contactName">
+                        <input type="email" placeholder="بريدك الإلكتروني" required id="contactEmail">
+                        <input type="text" placeholder="الموضوع" id="contactSubject">
+                        <textarea placeholder="رسالتك" id="contactMessage"></textarea>
                         <button type="submit" class="btn">إرسال الرسالة</button>
+                        <div id="formMessage" style="margin-top: 15px;"></div>
                     </form>
                 </div>
             </div>
@@ -465,33 +1177,320 @@
     <!-- الفوتر -->
     <footer class="footer">
         <div class="container">
-            <p>جميع الحقوق محفوظة &copy; 2023 يوسف خالد</p>
+            <p>جميع الحقوق محفوظة &copy; <span id="year"></span> يوسف خالد</p>
             <p>تصميم وتطوير <a href="#">يوسف خالد</a></p>
             <p>لا تنسى الصلاة على النبي ﷺ</p>
         </div>
     </footer>
 
+    <!-- واتساب عائم -->
+    <a href="https://wa.me/201007166173" class="whatsapp-float" target="_blank">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
     <script>
-        // Smooth scrolling for navigation links
+        // تأثيرات التمرير الناعمة
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
+            anchor.addEventListener('click', function(e) {
                 e.preventDefault();
-                
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                const target = document.querySelector(this.getAttribute('href'));
+                const headerOffset = 100;
+                const elementPosition = target.getBoundingClientRect().top;
+                const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+                window.scrollTo({
+                    top: offsetPosition,
                     behavior: 'smooth'
                 });
             });
         });
-        
-        // Change navbar background on scroll
+
+        // تغيير شريط التنقل عند التمرير
         window.addEventListener('scroll', function() {
             const navbar = document.querySelector('.navbar');
             if (window.scrollY > 50) {
-                navbar.style.boxShadow = '0 2px 10px rgba(0,0,0,0.1)';
+                navbar.classList.add('scrolled');
             } else {
-                navbar.style.boxShadow = 'none';
+                navbar.classList.remove('scrolled');
             }
+        });
+
+        // كشف العناصر عند التمرير
+        const sections = document.querySelectorAll('.section');
+        
+        const observerOptions = {
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        sections.forEach(section => {
+            observer.observe(section);
+        });
+
+        // إضافة سنة التذييل تلقائياً
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        // تأثيرات الجسيمات في قسم البطل
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles-js');
+            const particleCount = 30;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+                
+                // أحجام عشوائية
+                const size = Math.random() * 5 + 2;
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                
+                // مواقع عشوائية
+                particle.style.left = `${Math.random() * 100}%`;
+                particle.style.top = `${Math.random() * 100}%`;
+                
+                // شفافية عشوائية
+                particle.style.opacity = Math.random() * 0.5 + 0.1;
+                
+                // سرعات عشوائية
+                const duration = Math.random() * 20 + 10;
+                const delay = Math.random() * 5;
+                particle.style.animation = `floating ${duration}s ease-in-out ${delay}s infinite`;
+                
+                particlesContainer.appendChild(particle);
+            }
+        }
+
+        // شريط تقدم المهارات
+        function animateProgressBars() {
+            const progressBars = [
+                { id: 'html-progress', percentId: 'html-percent', width: 95 },
+                { id: 'css-progress', percentId: 'css-percent', width: 90 },
+                { id: 'js-progress', percentId: 'js-percent', width: 85 },
+                { id: 'whatsapp-progress', percentId: 'whatsapp-percent', width: 92 }
+            ];
+
+            progressBars.forEach(bar => {
+                const element = document.getElementById(bar.id);
+                const percentElement = document.getElementById(bar.percentId);
+                let width = 0;
+                const id = setInterval(frame, 15);
+                
+                function frame() {
+                    if (width >= bar.width) {
+                        clearInterval(id);
+                    } else {
+                        width++;
+                        element.style.width = width + '%';
+                        percentElement.textContent = width + '%';
+                    }
+                }
+            });
+        }
+
+        // ساعة إسلامية
+        function updateIslamicClock() {
+            const now = new Date();
+            const hijriDate = new Intl.DateTimeFormat('ar-u-ca-islamic', {
+                day: 'numeric',
+                month: 'long',
+                year: 'numeric'
+            }).format(now);
+
+            const gregorianDate = new Intl.DateTimeFormat('ar-EG', {
+                weekday: 'long',
+                day: 'numeric',
+                month: 'long',
+                year: 'numeric'
+            }).format(now);
+
+            const timeString = now.toLocaleTimeString('ar-EG', {
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit'
+            });
+
+            document.getElementById('hijriDate').textContent = hijriDate;
+            document.getElementById('gregorianDate').textContent = gregorianDate;
+            document.getElementById('prayerTimeNow').textContent = timeString;
+
+            // مواقيت الصلاة (مثال - يمكن استبدالها ببيانات حقيقية)
+            const prayerTimes = [
+                { name: 'الفجر', time: '4:30 ص' },
+                { name: 'الشروق', time: '6:00 ص' },
+                { name: 'الظهر', time: '12:30 م' },
+                { name: 'العصر', time: '3:45 م' },
+                { name: 'المغرب', time: '6:30 م' },
+                { name: 'العشاء', time: '8:00 م' }
+            ];
+
+            const prayerTimesContainer = document.getElementById('prayerTimes');
+            prayerTimesContainer.innerHTML = '';
+
+            prayerTimes.forEach(prayer => {
+                const prayerElement = document.createElement('div');
+                prayerElement.className = 'prayer-time';
+                prayerElement.innerHTML = `
+                    <div>${prayer.name}</div>
+                    <div>${prayer.time}</div>
+                `;
+                prayerTimesContainer.appendChild(prayerElement);
+            });
+        }
+
+        // لعبة الأسئلة الدينية
+        const quizQuestions = [
+            {
+                question: "ما هي أول سورة في القرآن الكريم؟",
+                options: ["البقرة", "الفاتحة", "العلق", "الناس"],
+                answer: 1
+            },
+            {
+                question: "كم عدد أركان الإسلام؟",
+                options: ["4", "5", "6", "7"],
+                answer: 1
+            },
+            {
+                question: "ما هي السورة التي تسمى قلب القرآن؟",
+                options: ["البقرة", "الرحمن", "يس", "الكهف"],
+                answer: 2
+            },
+            {
+                question: "من هو أول رسول بعثه الله إلى الأرض؟",
+                options: ["آدم", "نوح", "إدريس", "موسى"],
+                answer: 1
+            }
+        ];
+
+        let currentQuestion = 0;
+        let score = 0;
+
+        function loadQuestion() {
+            const quizQuestion = document.getElementById('quizQuestion');
+            const quizOptions = document.getElementById('quizOptions');
+            const quizNext = document.getElementById('quizNext');
+            
+            quizQuestion.textContent = quizQuestions[currentQuestion].question;
+            quizOptions.innerHTML = '';
+            
+            quizQuestions[currentQuestion].options.forEach((option, index) => {
+                const optionElement = document.createElement('div');
+                optionElement.className = 'quiz-option';
+                optionElement.textContent = option;
+                optionElement.addEventListener('click', () => checkAnswer(index));
+                quizOptions.appendChild(optionElement);
+            });
+            
+            quizNext.style.display = 'none';
+        }
+
+        function checkAnswer(selectedIndex) {
+            const quizOptions = document.querySelectorAll('.quiz-option');
+            const correctIndex = quizQuestions[currentQuestion].answer;
+            
+            quizOptions.forEach((option, index) => {
+                option.classList.remove('correct', 'wrong');
+                if (index === correctIndex) {
+                    option.classList.add('correct');
+                } else if (index === selectedIndex && index !== correctIndex) {
+                    option.classList.add('wrong');
+                }
+                option.style.pointerEvents = 'none';
+            });
+            
+            if (selectedIndex === correctIndex) {
+                score++;
+                document.getElementById('quizScore').textContent = `النقاط: ${score}`;
+            }
+            
+            document.getElementById('quizNext').style.display = 'inline-block';
+        }
+
+        document.getElementById('quizNext').addEventListener('click', () => {
+            currentQuestion++;
+            if (currentQuestion < quizQuestions.length) {
+                loadQuestion();
+            } else {
+                document.getElementById('quizQuestion').textContent = `انتهت الأسئلة! نقاطك: ${score}/${quizQuestions.length}`;
+                document.getElementById('quizOptions').innerHTML = '';
+                document.getElementById('quizNext').style.display = 'none';
+                
+                // إعادة اللعبة بعد 3 ثوان
+                setTimeout(() => {
+                    currentQuestion = 0;
+                    score = 0;
+                    document.getElementById('quizScore').textContent = `النقاط: 0`;
+                    loadQuestion();
+                }, 3000);
+            }
+        });
+
+        // نموذج التواصل
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const name = document.getElementById('contactName').value;
+            const email = document.getElementById('contactEmail').value;
+            const subject = document.getElementById('contactSubject').value;
+            const message = document.getElementById('contactMessage').value;
+            
+            // هنا يمكنك إضافة كود إرسال النموذج إلى الخادم
+            // لأغراض العرض، سنعرض رسالة نجاح فقط
+            
+            const formMessage = document.getElementById('formMessage');
+            formMessage.innerHTML = `
+                <div style="background-color: #4CAF50; color: white; padding: 10px; border-radius: 5px;">
+                    شكراً لك ${name}! تم استلام رسالتك بنجاح وسأتواصل معك قريباً إن شاء الله.
+                </div>
+            `;
+            
+            this.reset();
+            
+            // إخفاء الرسالة بعد 5 ثوان
+            setTimeout(() => {
+                formMessage.innerHTML = '';
+            }, 5000);
+        });
+
+        // الوضع الليلي
+        const themeToggle = document.getElementById('themeToggle');
+        const body = document.body;
+
+        themeToggle.addEventListener('click', () => {
+            body.classList.toggle('dark-mode');
+            
+            if (body.classList.contains('dark-mode')) {
+                themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+                localStorage.setItem('theme', 'dark');
+            } else {
+                themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
+                localStorage.setItem('theme', 'light');
+            }
+        });
+
+        // تحميل الوضع المحفوظ
+        if (localStorage.getItem('theme') === 'dark') {
+            body.classList.add('dark-mode');
+            themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+        }
+
+        // تهيئة جميع المكونات عند تحميل الصفحة
+        window.addEventListener('load', () => {
+            createParticles();
+            animateProgressBars();
+            updateIslamicClock();
+            loadQuestion();
+            
+            // تحديث الساعة كل ثانية
+            setInterval(updateIslamicClock, 1000);
         });
     </script>
 </body>
-</html>
+                        </html>
